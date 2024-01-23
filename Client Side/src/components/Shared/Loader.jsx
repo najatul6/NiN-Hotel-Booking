@@ -1,9 +1,17 @@
-import React from 'react'
+import { ScaleLoader } from 'react-spinners'
 
-function Loader() {
+const Loader = ({ smallHeight }) => {
   return (
-    <div>Loader</div>
-  )
-}
+    <div
+      className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}
+      flex 
+      flex-col 
+      justify-center 
+      items-center `}
+    >
+      <ScaleLoader size={100} color='red' />
+    </div>
+  );
+};
 
-export default Loader
+export default Loader;
