@@ -6,7 +6,7 @@ import CategoriesBox from "./CategoriesBox/CategoriesBox";
 const Categories = () => {
   return (
     <Container>
-      <div>{categories?.map(category=><CategoriesBox key={category.label}/>)}</div>
+      <div className="pt-4 flex items-center justify-between overflow-x-auto">{categories?.map(category=><CategoriesBox key={category?.label} label={category?.label} icon={category?.icon}/>)}</div>
     </Container>
   );
 };
