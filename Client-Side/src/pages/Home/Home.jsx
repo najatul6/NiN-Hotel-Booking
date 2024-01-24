@@ -5,7 +5,7 @@ import Rooms from "../../components/Rooms/Rooms";
 const Home = () => {
   return (
     <div>
-      {/* Category Section  */}
+      {/* Categories Section  */}
       <Categories/>
       {/* Room Section  */}
       <Rooms/>
