@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import qs from 'query-string'
+import qs from "query-string";
 
-const CategoriesBox = ({ label, icon: Icon }) => {
+const CategoriesBox = ({ label, icon: Icon, selected }) => {
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
   const handleClick = () => {
@@ -13,14 +13,28 @@ const CategoriesBox = ({ label, icon: Icon }) => {
         url: "/",
         query: updateQuery,
       });
-      navigate(url)
+      navigate(url);
     }
   };
-  params.get("Category");
+  params.get("category");
   return (
     <div
       onClick={handleClick}
-      className="flex flex-col justify-center items-center gap-2 p-3 border-b-2 hover:border-b-deep-orange border-b-neutral-800 text-neutral-800 hover:text-deep-orange transition-all cursor-pointer duration-300"
+      className={`
+      flex 
+      flex-col 
+      justify-center 
+      items-center 
+      gap-2 
+      border-b-2
+      p-3
+      ${selected?'border-b-deep-orange text-deep-orange ':"border-b-transparent text-neutral-800"}
+      hover:border-b-deep-orange 
+      hover:text-deep-orange 
+      transition-all 
+      cursor-pointer 
+      rounded-b
+      duration-300`}
     >
       <Icon size={26} />
       <div className="text-sm font-medium">{label}</div>
