@@ -9,7 +9,7 @@ const Loader = ({ smallHeight }) => {
       justify-center 
       items-center `}
     >
-      <PropagateLoader color="#ff6d01" />
+      <PropagateLoader size={100} color="#ff6d01" />
     </div>
   );
 };

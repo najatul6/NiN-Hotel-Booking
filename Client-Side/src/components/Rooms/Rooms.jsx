@@ -6,10 +6,10 @@ import Heading from "../Shared/Heading";
 import Loader from "../Shared/Loader";
 
 const Rooms = () => {
-  const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [params, setParams] = useSearchParams();
   const category = params.get("category");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
