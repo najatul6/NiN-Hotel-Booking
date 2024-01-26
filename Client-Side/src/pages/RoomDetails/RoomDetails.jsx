@@ -42,7 +42,7 @@ const RoomDetails = () => {
 
           {/* Room Reservation */}
           <div className="md:col-span-3 order-first md:order-last mb-10">
-            <RoomReservation room={room} />
+            <RoomReservation roomData={room} />
           </div>
         </div>
       </div>
