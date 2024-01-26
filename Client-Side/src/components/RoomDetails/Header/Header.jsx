@@ -2,7 +2,6 @@
 import Heading from "../../Shared/Heading";
 
 const Header = ({ roomData }) => {
-  console.log("hello", roomData);
   return (
     <>
       <Heading title={roomData?.title} subtitle={roomData?.location} />

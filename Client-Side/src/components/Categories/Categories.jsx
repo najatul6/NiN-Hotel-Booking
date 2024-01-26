@@ -6,7 +6,6 @@ import CategoriesBox from "./CategoriesBox/CategoriesBox";
 const Categories = () => {
   const [params, setParams] = useSearchParams();
   const category = params.get("category");
-  console.log(category);
   return (
     <Container>
       <div className="pt-4 flex items-center justify-between overflow-x-auto">
@@ -15,7 +14,7 @@ const Categories = () => {
             key={item?.label}
             label={item?.label}
             icon={item?.icon}
-            selected={category===item.label}
+            selected={category===item?.label}
           />
         ))}
       </div>

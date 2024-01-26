@@ -1,18 +1,28 @@
-/* eslint-disable react/prop-types */
+
+import { formatDistance } from "date-fns";
 import Button from "../../Button/Button";
 import Calender from "../Calender/Calender";
 
-const RoomReservation = ({ roomData }) => {
+const RoomReservation = ({ room }) => {
+  //   Price Calculation
+  // Total Days * price
+  const totalDays = formatDistance(
+    new Date(room?.to),
+    new Date(room?.from)
+  );
+  console.log(totalDays);
+  // const totalPrice = parseFloat()
+
   return (
     <div className="rounded-xl border-[1px] border-neutral-200 overflow-hidden bg-white shadow-lg">
       <div className="flex items-center gap-1 p-4">
         <div className="text-2xl font-semibold text-deep-orange">
-          $ {roomData?.price}
+          $ {room?.price}
         </div>
         <div className="font-light text-neutral-600">night</div>
       </div>
       <hr />
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center">
         <Calender />
       </div>
       <hr />
@@ -22,7 +32,7 @@ const RoomReservation = ({ roomData }) => {
       <hr />
       <div className="p-4 flex items-center justify-between font-semibold text-lg">
         <div>Total :</div>
-        <div>$ {roomData?.price}</div>
+        <div className="text-deep-orange">$ {room?.price}</div>
       </div>
     </div>
   );
