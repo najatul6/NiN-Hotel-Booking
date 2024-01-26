@@ -1,10 +1,13 @@
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { imageUpload } from "../../Utils/ImageUpload";
 import useAuth from "../../hooks/useAuth";
+import { getToken, saveUser } from "../../Utils/auth";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
   // Form Submit Handle
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,23 +16,26 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-    try{
+    try {
       // Upload Image
       const imageData = await imageUpload(image);
 
-      // Create User 
-      const userCreate = await createUser(email,password)
+      // Create User
+      const userCreate = await createUser(email, password);
 
       // Update User Profile
-      await updateUserProfile(name,imageData?.data.display_url)
+      await updateUserProfile(name, imageData?.data.display_url);
 
       // Save user in Database
-
+      const dbResponse = await saveUser(userCreate.user);
+      console.log(dbResponse);
 
       // Get Token from jwt
-      
-    }catch(err){
-      console.log(err?.message)
+      await getToken(userCreate?.user?.email)
+      navigate('/')
+      toast.success('SignUp Successful')
+    } catch (err) {
+      toast.error(err?.message)
     }
   };
   return (
