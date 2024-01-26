@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const Heading = ({center,title,subtitle}) => {
   return (
     <div className={center ? "text-center" : "text-start"}>
