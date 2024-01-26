@@ -1,9 +1,10 @@
-
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { imageUpload } from "../../Utils/ImageUpload";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
+  const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
   // Form Submit Handle
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -12,7 +13,24 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-  const imageData = imageUpload(image);
+    try{
+      // Upload Image
+      const imageData = await imageUpload(image);
+
+      // Create User 
+      const userCreate = await createUser(email,password)
+
+      // Update User Profile
+      await updateUserProfile(name,imageData?.data.display_url)
+
+      // Save user in Database
+
+
+      // Get Token from jwt
+      
+    }catch(err){
+      console.log(err?.message)
+    }
   };
   return (
     <div className="flex justify-center items-center min-h-screen">
