@@ -4,9 +4,11 @@ import { imageUpload } from "../../Utils/ImageUpload";
 import useAuth from "../../hooks/useAuth";
 import { getToken, saveUser } from "../../Utils/auth";
 import toast from "react-hot-toast";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const SignUp = () => {
-  const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
+  const { createUser, signInWithGoogle, updateUserProfile, loading } =
+    useAuth();
   const navigate = useNavigate();
   // Form Submit Handle
   const handleSubmit = async (event) => {
@@ -31,11 +33,11 @@ const SignUp = () => {
       console.log(dbResponse);
 
       // Get Token from jwt
-      await getToken(userCreate?.user?.email)
-      navigate('/')
-      toast.success('SignUp Successful')
+      await getToken(userCreate?.user?.email);
+      navigate("/");
+      toast.success("SignUp Successful");
     } catch (err) {
-      toast.error(err?.message)
+      toast.error(err?.message);
     }
   };
   return (
@@ -43,7 +45,7 @@ const SignUp = () => {
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
         <div className="mb-8 text-center">
           <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-          <p className="text-sm text-gray-400">Welcome to StayVista</p>
+          <p className="text-sm text-gray-400">Welcome to Hotel.NiN</p>
         </div>
         <form
           onSubmit={handleSubmit}
@@ -114,7 +116,11 @@ const SignUp = () => {
               type="submit"
               className="bg-deep-orange w-full rounded-md py-3 text-white"
             >
-              Continue
+              {loading ? (
+                <TbFidgetSpinner className="animate-spin m-auto" />
+              ) : (
+                "Continue"
+              )}
             </button>
           </div>
         </form>
