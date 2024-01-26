@@ -10,7 +10,8 @@ const SignUp = () => {
   const { createUser, signInWithGoogle, updateUserProfile, loading } =
     useAuth();
   const navigate = useNavigate();
-  // Form Submit Handle
+
+  // Form Submit Handle sign up
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -40,6 +41,27 @@ const SignUp = () => {
       toast.error(err?.message);
     }
   };
+
+  // Handle Google 
+  const handleGoogle=async ()=>{
+    try {
+      
+
+      // User Registration using google
+      const result = await signInWithGoogle();
+
+      // Save user in Database
+      const dbResponse = await saveUser(result.user);
+      console.log(dbResponse);
+
+      // Get Token from jwt
+      await getToken(result?.user?.email);
+      navigate("/");
+      toast.success("SignUp Successful");
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  }
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -131,7 +153,7 @@ const SignUp = () => {
           </p>
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
-        <div className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer">
+        <div onClick={handleGoogle} className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer">
           <FcGoogle size={32} />
 
           <p>Continue with Google</p>
