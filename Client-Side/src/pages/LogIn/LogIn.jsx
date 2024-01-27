@@ -1,5 +1,5 @@
 import { FcGoogle } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { getToken, saveUser } from '../../Utils/auth';
@@ -8,6 +8,8 @@ import { TbFidgetSpinner } from 'react-icons/tb';
 const LogIn = () => {
   const { signIn, signInWithGoogle, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation()
+  const from = location?.state?.from?.pathname || '/'
 
   // Form Submit Handle sign up
   const handleSubmit = async (event) => {
@@ -23,7 +25,7 @@ const LogIn = () => {
 
       // Get Token from jwt
       await getToken(userCreate?.user?.email);
-      navigate("/");
+      navigate(from,{replace:true});
       toast.success("Log In Successful");
     } catch (err) {
       toast.error(err?.message);
@@ -44,7 +46,7 @@ const LogIn = () => {
 
       // Get Token from jwt
       await getToken(result?.user?.email);
-      navigate("/");
+      navigate(from,{replace:true});
       toast.success("Log In Successful");
     } catch (err) {
       toast.error(err?.message);
