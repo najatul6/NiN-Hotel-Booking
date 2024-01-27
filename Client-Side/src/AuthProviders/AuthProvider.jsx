@@ -12,6 +12,7 @@ import {
   } from 'firebase/auth';
 import { app } from "../firebase/firebase.config";
 import PropTypes from 'prop-types';
+import { removeToken } from "../Utils/auth";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
@@ -41,8 +42,9 @@ const AuthProvider = ({ children }) => {
       return sendPasswordResetEmail(auth, email)
     }
   
-    const logOut = () => {
+    const logOut = async() => {
       setLoading(true)
+      await removeToken()
       return signOut(auth)
     }
   

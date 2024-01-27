@@ -17,3 +17,10 @@ export const getToken = async (email) => {
   console.log("Token From SErver------------------>",data)
   return data;
 };
+
+
+// Remove token from server
+export const removeToken = async () => {
+  const { data } = await axiosSecure.get(`/logout`);
+  return data;
+};
