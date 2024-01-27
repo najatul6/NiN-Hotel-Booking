@@ -3,14 +3,18 @@ const app = express();
 require("dotenv").config();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 const port = process.env.PORT || 5000;
 
 // middleware
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://ninsights-room-booking.web.app/",
+  ],
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -47,6 +51,7 @@ async function run() {
   try {
     // Collections
     const usersCollection = client.db("NiNRoomBookingDB").collection("users");
+    const roomsCollection = client.db("NiNRoomBookingDB").collection("rooms");
 
     // auth related api
     app.post("/jwt", async (req, res) => {
@@ -96,6 +101,20 @@ async function run() {
         },
         options
       );
+      res.send(result);
+    });
+
+    // Get all rooms
+    app.get("/rooms", async (req, res) => {
+      const result = await roomsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // Get single room
+    app.get("/rooms/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await roomsCollection.findOne(query);
       res.send(result);
     });
 
