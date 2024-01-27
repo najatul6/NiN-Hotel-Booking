@@ -1,29 +1,34 @@
-import { createBrowserRouter } from 'react-router-dom'
-import SignUp from '../pages/SignUp/SignUp'
-import Main from '../layout/Main'
-import ErrorPage from '../pages/ErrorPage/ErrorPage'
-import Home from '../pages/Home/Home'
-import LogIn from '../pages/LogIn/LogIn'
-import RoomDetails from '../pages/RoomDetails/RoomDetails'
-import PrivateRoute from './PrivateRoute'
+import { createBrowserRouter } from "react-router-dom";
+import SignUp from "../pages/SignUp/SignUp";
+import Main from "../layout/Main";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Home from "../pages/Home/Home";
+import LogIn from "../pages/LogIn/LogIn";
+import RoomDetails from "../pages/RoomDetails/RoomDetails";
+import PrivateRoute from "./PrivateRoute";
+import { getRoom } from "../Utils/rooms";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Main />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
-        path: '/room/:id',
-        element: <PrivateRoute><RoomDetails /></PrivateRoute>,
-        
+        path: "/room/:id",
+        element: (
+          <PrivateRoute>
+            <RoomDetails />
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => getRoom(params?.id),
       },
     ],
   },
-  { path: '/login', element: <LogIn /> },
-  { path: '/signup', element: <SignUp /> },
-])
+  { path: "/login", element: <LogIn /> },
+  { path: "/signup", element: <SignUp /> },
+]);
