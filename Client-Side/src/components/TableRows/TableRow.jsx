@@ -8,7 +8,7 @@ const TableRow = ({ booking }) => {
           <div className='flex-shrink-0'>
             <div className='block relative'>
               <img
-                alt='profile'
+                alt='thumbnail image'
                 src={booking?.image}
                 className='mx-auto object-cover rounded h-10 w-15 '
               />
@@ -24,7 +24,7 @@ const TableRow = ({ booking }) => {
           <div className='flex-shrink-0'>
             <div className='block relative'>
               <img
-                alt='profile'
+                alt='profile image'
                 src={booking?.guest?.image}
                 className='mx-auto object-cover rounded h-10 w-15 '
               />
