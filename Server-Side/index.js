@@ -111,12 +111,19 @@ async function run() {
     });
 
     // Get single room
-    app.get("/rooms/:id", async (req, res) => {
+    app.get("/room/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await roomsCollection.findOne(query);
       res.send(result);
     });
+
+    // Save a room in database
+    app.post('/rooms',verifyToken,async(req,res)=>{
+      const room = req.body;
+      const result = await roomsCollection.insertOne(room)
+      res.send(result)
+    })
 
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
