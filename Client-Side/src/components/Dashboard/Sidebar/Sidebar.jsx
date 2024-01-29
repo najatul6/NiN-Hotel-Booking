@@ -68,13 +68,13 @@ const Sidebar = () => {
               <MenuItem
                 icon={BsHouseAddFill}
                 label="Add Room"
-                address="/add-room"
+                address="add-room"
               />
 
               <MenuItem
                 icon={MdMapsHomeWork}
                 label="My Listings"
-                address="/my-listings"
+                address="my-listings"
               />
 
               {/* Menu Items */}
