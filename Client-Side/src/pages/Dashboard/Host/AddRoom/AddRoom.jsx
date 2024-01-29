@@ -48,12 +48,13 @@ const AddRoom = () => {
       bedrooms,
       bathrooms,
       description,
-      image: image_url?.display_url,
+      image: image_url?.data?.display_url,
       host,
       category,
     };
     try {
       const data = await addRoom(roomData);
+      console.log(data)
       setUploadButtonText("Uploaded!");
       toast.success("Room Added!");
       navigate("/dashboard/my-listings");
