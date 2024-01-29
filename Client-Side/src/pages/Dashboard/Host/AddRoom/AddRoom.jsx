@@ -6,6 +6,8 @@ import useAuth from "../../../../hooks/useAuth";
 
 const AddRoom = () => {
   const { user } = useAuth();
+  const [loading,setLoading]= useState(false);
+  const [uploadButtonText,setUploadButtonText]=useState('Upload Image')
   const [dates, setDates] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -53,6 +55,11 @@ const AddRoom = () => {
     console.log(ranges);
     setDates(ranges?.selection);
   };
+
+//   handle image Preview
+const handleImageChange=image=>{
+    setUploadButtonText(image?.name)
+}
   return (
     <div>
       <Helmet>
@@ -63,6 +70,9 @@ const AddRoom = () => {
         handleSubmit={handleSubmit}
         handleDates={handleDates}
         dates={dates}
+        handleImageChange={handleImageChange}
+        loading={loading}
+        uploadButtonText={uploadButtonText}
       />
     </div>
   );
