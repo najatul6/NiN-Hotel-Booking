@@ -11,7 +11,7 @@ const AddRoomForm = ({
 }) => {
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="space-y-6">
             <div className="space-y-1 text-sm">
@@ -49,7 +49,7 @@ const AddRoomForm = ({
               <label htmlFor="location" className="block text-gray-600">
                 Select Availability Range
               </label>
-              <DateRange rangeColors={["#F43F5E"]} />
+              <DateRange rangeColors={["#ff6d01"]} />
             </div>
           </div>
           <div className="space-y-6">
