@@ -3,17 +3,22 @@ import AddRoomForm from "../../../../components/Form/AddRoomFrom";
 import { useState } from "react";
 import { imageUpload } from "../../../../Utils/ImageUpload";
 import useAuth from "../../../../hooks/useAuth";
+import { addRoom } from "../../../../Utils/rooms";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddRoom = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
-  const [loading,setLoading]= useState(false);
-  const [uploadButtonText,setUploadButtonText]=useState('Upload Image')
+  const [loading, setLoading] = useState(false);
+  const [uploadButtonText, setUploadButtonText] = useState("Upload Image");
   const [dates, setDates] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   });
   const handleSubmit = async (event) => {
+    setLoading(true);
     event.preventDefault();
     const form = event.target;
     const location = form.location.value;
@@ -47,7 +52,17 @@ const AddRoom = () => {
       host,
       category,
     };
-    console.log("hello", roomData);
+    try {
+      const data = await addRoom(roomData);
+      setUploadButtonText("Uploaded!");
+      toast.success("Room Added!");
+      navigate("/dashboard/my-listings");
+    } catch (err) {
+      console.log(err?.message);
+      toast.error(err?.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   //   Handle date change from react-date-range calender
@@ -56,10 +71,10 @@ const AddRoom = () => {
     setDates(ranges?.selection);
   };
 
-//   handle image Preview
-const handleImageChange=image=>{
-    setUploadButtonText(image?.name)
-}
+  //   handle image Preview
+  const handleImageChange = (image) => {
+    setUploadButtonText(image?.name);
+  };
   return (
     <div>
       <Helmet>
