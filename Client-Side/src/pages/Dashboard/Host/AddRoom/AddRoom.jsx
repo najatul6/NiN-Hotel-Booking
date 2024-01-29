@@ -28,6 +28,7 @@ const AddRoom = () => {
 
   //   Handle date change from react-date-range calender
   const handleDates = (ranges) => {
+    console.log(ranges)
     setDates(ranges?.selection);
   };
   return (
