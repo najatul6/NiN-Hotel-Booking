@@ -29,7 +29,7 @@ const UserDataRow = ({ user }) => {
             ></span>
             <span className='relative'>Update Role</span>
           </span>
-          {/* Modal */}
+          {/* Modal 01 */}
         </td>
       </tr>
     )
