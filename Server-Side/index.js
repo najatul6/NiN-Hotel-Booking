@@ -110,6 +110,14 @@ async function run() {
       res.send(result);
     });
 
+    // Get all rooms for host
+    app.get("/rooms/:email",async(req,res)=>{
+      const email=req.params.email
+      const query = {'host.email':email}
+      const result = await roomsCollection.find(query).toArray();
+      res.send(result);
+    })
+
     // Get single room
     app.get("/room/:id", async (req, res) => {
       const id = req.params.id;
