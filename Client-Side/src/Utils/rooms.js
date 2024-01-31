@@ -6,6 +6,12 @@ export const getAllRooms = async()=>{
     return data
 }
 
+// Fetch All Rooms for host only from db
+export const getHostRooms=async (email)=>{
+    const {data}=await axiosSecure(`/rooms/${email}`)
+    return data
+}
+
 // Fetch Single Room from db
 export const getRoom = async(id)=>{
     const {data}=await axiosSecure(`/room/${id}`)

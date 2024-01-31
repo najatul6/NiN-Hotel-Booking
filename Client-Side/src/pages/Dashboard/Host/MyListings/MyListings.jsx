@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 const MyListings = () => {
+  // Fetch Room Data
+  const [room, setRoom]= useState([])
     return (
         <>
       <Helmet>
