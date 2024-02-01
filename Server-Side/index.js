@@ -104,6 +104,7 @@ async function run() {
       res.send(result);
     });
 
+    // Get rooms only for host
     app.get("/user/:email",async (req,res)=>{
       const email =req.params.email
       const result = await roomsCollection.findOne({email})
