@@ -11,6 +11,9 @@ import DashboardLayout from "../layout/DashboardLayout";
 import MyListings from "../pages/Dashboard/Host/MyListings/MyListings";
 import AddRoom from "../pages/Dashboard/Host/AddRoom/Addroom";
 import HostRoute from "./HostRoute";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
+import AdminRoute from "./AdminRoute";
+import MyBookings from "../pages/Dashboard/Guest/My Bookings/MyBookings";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +46,12 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      // Guest Routes
+      {path:"my-bookings",element:<PrivateRoute>
+      <MyBookings/>
+    </PrivateRoute>},
+
+      // Host Routes
       {
         path: "add-room",
         element: (
@@ -57,7 +66,21 @@ export const router = createBrowserRouter([
         path: "my-listings",
         element: (
           <PrivateRoute>
-            <MyListings />
+            <HostRoute>
+              <MyListings />
+            </HostRoute>
+          </PrivateRoute>
+        ),
+      },
+
+      // Admin Routes
+      {
+        path: "manage-users",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUsers />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
