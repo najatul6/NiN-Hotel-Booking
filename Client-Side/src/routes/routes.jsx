@@ -47,9 +47,14 @@ export const router = createBrowserRouter([
     ),
     children: [
       // Guest Routes
-      {path:"my-bookings",element:<PrivateRoute>
-      <MyBookings/>
-    </PrivateRoute>},
+      {
+        path: "my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings />
+          </PrivateRoute>
+        ),
+      },
 
       // Host Routes
       {
