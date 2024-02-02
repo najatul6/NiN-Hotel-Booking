@@ -10,6 +10,7 @@ import { getRoom } from "../Utils/rooms";
 import DashboardLayout from "../layout/DashboardLayout";
 import MyListings from "../pages/Dashboard/Host/MyListings/MyListings";
 import AddRoom from "../pages/Dashboard/Host/AddRoom/Addroom";
+import HostRoute from "./HostRoute";
 
 export const router = createBrowserRouter([
   {
@@ -46,7 +47,9 @@ export const router = createBrowserRouter([
         path: "add-room",
         element: (
           <PrivateRoute>
-            <AddRoom />
+            <HostRoute>
+              <AddRoom />
+            </HostRoute>
           </PrivateRoute>
         ),
       },
