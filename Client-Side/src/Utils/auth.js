@@ -14,10 +14,9 @@ export const saveUser = async (user) => {
 // Get token from server
 export const getToken = async (email) => {
   const { data } = await axiosSecure.post(`/jwt`, email);
-  console.log("Token From SErver------------------>",data)
+  console.log("Token From SErver------------------>", data);
   return data;
 };
-
 
 // Remove token from server
 export const clearCookie = async () => {
@@ -25,9 +24,8 @@ export const clearCookie = async () => {
   return data;
 };
 
-
 // Get user role
-export const getRole = async(email)=>{
-  const {data}=await axiosSecure(`/user/${email}`)
-    return data
-}
+export const getRole = async email => {
+  const { data } = await axiosSecure.get(`/user/${email}`);
+  return data.role
+};

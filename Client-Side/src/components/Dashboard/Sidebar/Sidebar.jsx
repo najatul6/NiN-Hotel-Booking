@@ -9,17 +9,17 @@ import { GrLogout } from "react-icons/gr";
 import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
 import { BsGraphUp } from "react-icons/bs";
-import { BsHouseAddFill } from "react-icons/bs";
-import { MdMapsHomeWork } from "react-icons/md";
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
+import HostMenu from "./HostMenu";
+import GuestMenu from "./GuestMenu";
+import AdminMenu from "./AdminMenu";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [isActive, setActive] = useState(false);
-  const [role] = useRole()
-  console.log(role,'user role-->')
+  const [role] = useRole();
 
   //   For guest/host menu item toggle button
   const toggleHandler = (event) => {
@@ -69,19 +69,11 @@ const Sidebar = () => {
                 label="Statistics"
                 address="/dashboard"
               />
-              <MenuItem
-                icon={BsHouseAddFill}
-                label="Add Room"
-                address="add-room"
-              />
 
-              <MenuItem
-                icon={MdMapsHomeWork}
-                label="My Listings"
-                address="my-listings"
-              />
-
-              {/* Menu Items */}
+              {/* Host Menu Items */}
+              {role === "guest" && <GuestMenu />}
+              {role === "host" ? toggle ? <HostMenu /> : <GuestMenu /> : ""}
+              {role === "admin" && <AdminMenu />}
             </nav>
           </div>
         </div>
