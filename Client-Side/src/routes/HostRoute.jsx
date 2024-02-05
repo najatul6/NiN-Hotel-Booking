@@ -7,3 +7,4 @@ const HostRoute = ({ children }) => {
   if (role === "host") return children;
   return <Navigate to="/dashboard" />;
 };
+export default HostRoute;
