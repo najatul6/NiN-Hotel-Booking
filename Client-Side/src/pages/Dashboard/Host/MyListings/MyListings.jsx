@@ -68,7 +68,7 @@ const MyListings = () => {
                     </th>
                   </tr>
                 </thead>
-                
+                <tbody>{/* Room row data */} {rooms?.map(room=><RoomDataRow key={room?._id} room={room}/>)}</tbody>
               </table>
             </div>
           </div>
