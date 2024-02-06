@@ -3,6 +3,7 @@ import { useState } from 'react'
 import './CheckOutFrom.css'
 import useAuth from '../../hooks/useAuth'
 import { ImSpinner9 } from 'react-icons/im'
+import { useEffect } from 'react'
 
 const CheckOutForm = ({ bookingInfo, closeModal }) => {
   const stripe = useStripe()
@@ -13,6 +14,7 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
   const [processing, setProcessing] = useState(false)
 
   // Create Payment Intent
+  useEffect(()=>{},[])
 
   const handleSubmit = async event => {
     event.preventDefault()
