@@ -14,7 +14,7 @@ const Profile = () => {
       <div className="bg-white shadow-lg rounded-2xl w-3/5">
         <img
           alt="profile"
-          src="https://wallpapercave.com/wp/wp10784415.jpg"
+          src="https://i.ibb.co/hfWYFgN/Untitled-design.gif"
           className="w-full mb-4 rounded-t-lg h-36"
         />
         <div className="flex flex-col items-center justify-center p-4 -mt-16">
@@ -26,7 +26,7 @@ const Profile = () => {
             />
           </a>
 
-          <p className="p-2 px-4 text-xs text-white bg-pink-500 rounded-full">
+          <p className="p-2 px-4 text-xs text-white bg-deep-orange rounded-full">
             {role && role.toUpperCase()}
           </p>
           <p className="mt-2 text-xl font-medium text-gray-800 ">
@@ -46,10 +46,10 @@ const Profile = () => {
               </p>
 
               <div>
-                <button className="bg-[#F43F5E] px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1">
+                <button className="bg-dark-orange px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-deep-orange block mb-1">
                   Update Profile
                 </button>
-                <button className="bg-[#F43F5E] px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053]">
+                <button className="bg-dark-orange px-8 py-1 rounded-lg text-white cursor-pointer hover:bg-deep-orange">
                   Change Password
                 </button>
               </div>
