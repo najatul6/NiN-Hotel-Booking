@@ -53,6 +53,7 @@ async function run() {
     // Collections
     const usersCollection = client.db("NiNRoomBookingDB").collection("users");
     const roomsCollection = client.db("NiNRoomBookingDB").collection("rooms");
+    const bookingsCollection = client.db("NiNRoomBookingDB").collection("bookings");
 
     // auth related api
     app.post("/jwt", async (req, res) => {
@@ -153,6 +154,14 @@ async function run() {
       });
       res.send({ clientSecret: client_secret });
     });
+
+    // Save bookings info in bookings collection
+    app.post('/bookings',async(req,res)=>{
+      const booking=req.body
+      const result=await bookingsCollection.insertOne(booking)
+      // Send Email
+      res.send(result)
+    })
 
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
