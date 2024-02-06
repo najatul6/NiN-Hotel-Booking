@@ -145,10 +145,13 @@ async function run() {
     app.post("/create-payment-intent", verifyToken, async (req, res) => {
       const price = req.body;
       const amount = parseInt(price * 100);
-      if(!price || amount<1)return
-      const paymentIntent=await stripe.paymentIntents.create({
-        
-      })
+      if (!price || amount < 1) return;
+      const { client_secret } = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "usd",
+        payment_method_types: ["card"],
+      });
+      res.send({ clientSecret: client_secret });
     });
 
     // Connect the client to the server	(optional starting in v4.7)
