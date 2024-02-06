@@ -7,6 +7,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 const port = process.env.PORT || 5000;
+const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
 
 // middleware
 const corsOptions = {
@@ -105,11 +106,11 @@ async function run() {
     });
 
     // Get user role
-    app.get("/user/:email",async (req,res)=>{
-      const email =req.params.email
-      const result = await usersCollection.findOne({email})
-      res.send(result)
-    })
+    app.get("/user/:email", async (req, res) => {
+      const email = req.params.email;
+      const result = await usersCollection.findOne({ email });
+      res.send(result);
+    });
 
     // Get all rooms
     app.get("/rooms", async (req, res) => {
@@ -118,12 +119,12 @@ async function run() {
     });
 
     // Get all rooms for host
-    app.get("/rooms/:email",async(req,res)=>{
-      const email=req.params.email
-      const query = {'host.email':email}
+    app.get("/rooms/:email", async (req, res) => {
+      const email = req.params.email;
+      const query = { "host.email": email };
       const result = await roomsCollection.find(query).toArray();
       res.send(result);
-    })
+    });
 
     // Get single room
     app.get("/room/:id", async (req, res) => {
@@ -134,11 +135,21 @@ async function run() {
     });
 
     // Save a room in database
-    app.post('/rooms',verifyToken,async(req,res)=>{
+    app.post("/rooms", verifyToken, async (req, res) => {
       const room = req.body;
-      const result = await roomsCollection.insertOne(room)
-      res.send(result)
-    })
+      const result = await roomsCollection.insertOne(room);
+      res.send(result);
+    });
+
+    // Generate client secret for stripe payment
+    app.post("/create-payment-intent", verifyToken, async (req, res) => {
+      const price = req.body;
+      const amount = parseInt(price * 100);
+      if(!price || amount<1)return
+      const paymentIntent=await stripe.paymentIntents.create({
+        
+      })
+    });
 
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
