@@ -109,7 +109,6 @@ async function run() {
       const email =req.params.email
       const result = await usersCollection.findOne({email})
       res.send(result)
-      console.log(result)
     })
 
     // Get all rooms

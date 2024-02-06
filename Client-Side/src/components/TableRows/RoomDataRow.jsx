@@ -8,7 +8,7 @@ const RoomDataRow = ({ room }) => {
           <div className='flex-shrink-0'>
             <div className='block relative'>
             <img
-                alt='profile'
+                alt='service profile'
                 src={room?.image}
                 className='mx-auto object-cover rounded h-10 w-15 '
               />
