@@ -26,6 +26,7 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
       return
     }
 
+    // Card data lookup
     const { paymentMethod, error } = await stripe.createPaymentMethod({
       type: 'card',
       card,
@@ -41,6 +42,7 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
 
     setProcessing(true)
 
+    // payment cut here
     const { paymentIntent, error: confirmError } =
       await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
