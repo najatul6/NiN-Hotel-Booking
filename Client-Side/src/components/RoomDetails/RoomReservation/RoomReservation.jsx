@@ -2,21 +2,45 @@ import { useState } from "react";
 import Button from "../../Button/Button";
 import Calender from "../Calender/Calender";
 import { formatDistance } from "date-fns";
+import BookingModal from "../../Modal/BookingModal";
+import useAuth from "../../../hooks/useAuth";
 
 const RoomReservation = ({ roomData }) => {
-    const [value, setValue] = useState({
-      startDate: new Date(roomData?.from),
-      endDate: new Date(roomData?.to),
-      key: 'selection',
-    })
+  let [open, setOpen] = useState(false);
+  const { user } = useAuth();
+
+  const closeModal = () => {
+    setOpen(false);
+  };
+  const [value, setValue] = useState({
+    startDate: new Date(roomData?.from),
+    endDate: new Date(roomData?.to),
+    key: "selection",
+  });
 
   //   Total days * price
-    const totalDays = parseInt(
-      formatDistance(new Date(roomData?.to), new Date(roomData?.from)).split(' ')[0]
-    )
+  const totalDays = parseInt(
+    formatDistance(new Date(roomData?.to), new Date(roomData?.from)).split(
+      " "
+    )[0]
+  );
   // Total Price Calculation
-    const totalPrice = totalDays * roomData?.price
- 
+  const totalPrice = totalDays * roomData?.price;
+
+  const [bookingInfo, setBookingInfo] = useState({
+    guest: {
+      name: user?.displayName,
+      email: user?.email,
+      image: user?.photoURL,
+    },
+    host:roomData?.host?.email,
+    location:roomData?.location,
+    to:value?.endDate,
+    from:value?.startDate,
+    title:roomData?.title,
+    roomId:roomData?._id,
+    image:roomData?.image
+  });
 
   return (
     <div className="rounded-xl border-[1px] border-neutral-200 overflow-hidden bg-white shadow-lg">
@@ -28,17 +52,18 @@ const RoomReservation = ({ roomData }) => {
       </div>
       <hr />
       <div className="flex justify-center">
-        <Calender value={value}/>
+        <Calender value={value} />
       </div>
       <hr />
       <div className="p-4">
-        <Button label={"Reserve"} />
+        <Button onClick={() => setOpen(true)} label={"Reserve"} />
       </div>
       <hr />
       <div className="p-4 flex items-center justify-between font-semibold text-lg">
         <div>Total :</div>
         <div className="text-deep-orange">$ {totalPrice}</div>
       </div>
+      <BookingModal />
     </div>
   );
 };
