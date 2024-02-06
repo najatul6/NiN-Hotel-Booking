@@ -156,10 +156,24 @@ async function run() {
     });
 
     // Save bookings info in bookings collection
-    app.post('/bookings',async(req,res)=>{
+    app.post('/bookings',verifyToken,async(req,res)=>{
       const booking=req.body
       const result=await bookingsCollection.insertOne(booking)
       // Send Email
+      res.send(result)
+    })
+
+    // Update room booking status
+    app.patch('/rooms/status/:id',async(req,res)=>{
+      const id = req.params.id;
+      const status =req.body.status;
+      const query={_id:new ObjectId(id)}
+      const updateDoc = {
+        $set:{
+          booked:status,
+        }
+      }
+      const result=await roomsCollection.updateOne(query,updateDoc)
       res.send(result)
     })
 
