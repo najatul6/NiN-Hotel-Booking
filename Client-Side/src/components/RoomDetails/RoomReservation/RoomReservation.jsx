@@ -6,11 +6,11 @@ import BookingModal from "../../Modal/BookingModal";
 import useAuth from "../../../hooks/useAuth";
 
 const RoomReservation = ({ roomData }) => {
-  let [open, setOpen] = useState(false);
+  let [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
 
   const closeModal = () => {
-    setOpen(false);
+    setIsOpen(false);
   };
   const [value, setValue] = useState({
     startDate: new Date(roomData?.from),
@@ -35,6 +35,7 @@ const RoomReservation = ({ roomData }) => {
     },
     host:roomData?.host?.email,
     location:roomData?.location,
+    price:totalPrice,
     to:value?.endDate,
     from:value?.startDate,
     title:roomData?.title,
@@ -56,14 +57,14 @@ const RoomReservation = ({ roomData }) => {
       </div>
       <hr />
       <div className="p-4">
-        <Button onClick={() => setOpen(true)} label={"Reserve"} />
+        <Button onClick={() => setIsOpen(true)} label={"Reserve"} />
       </div>
       <hr />
       <div className="p-4 flex items-center justify-between font-semibold text-lg">
         <div>Total :</div>
         <div className="text-deep-orange">$ {totalPrice}</div>
       </div>
-      <BookingModal />
+      <BookingModal isOpen={isOpen} closeModal={closeModal} bookingInfo={bookingInfo}/>
     </div>
   );
 };
