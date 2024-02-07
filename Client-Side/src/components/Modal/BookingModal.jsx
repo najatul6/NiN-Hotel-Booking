@@ -52,11 +52,7 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
                     Location: {bookingInfo.location}
                   </p>
                 </div>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Guest: {bookingInfo.guest.name}
-                  </p>
-                </div>
+                
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
                     From: {format(new Date(bookingInfo.from), "PP")} - To:{" "}
