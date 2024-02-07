@@ -4,7 +4,8 @@ import "./CheckOutFrom.css";
 import useAuth from "../../hooks/useAuth";
 import { ImSpinner9 } from "react-icons/im";
 import { useEffect } from "react";
-import { createPaymentIntent } from "../../Utils/bookings";
+import { createPaymentIntent, saveBookingInfo, updateStatus } from "../../Utils/bookings";
+import toast from "react-hot-toast";
 
 const CheckOutForm = ({ bookingInfo, closeModal }) => {
   const stripe = useStripe();
@@ -17,10 +18,10 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
   // Create Payment Intent
   useEffect(() => {
     if (bookingInfo?.price > 0) {
-      createPaymentIntent({price:bookingInfo?.price}).then(data=>{
-        console.log(data?.clientSecret)
-        setClientSecret(data?.clientSecret)
-      })
+      createPaymentIntent({ price: bookingInfo?.price }).then((data) => {
+        console.log(data?.clientSecret);
+        setClientSecret(data?.clientSecret);
+      });
     }
   }, [bookingInfo]);
 
@@ -72,13 +73,22 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
     console.log("payment intent", paymentIntent);
 
     if (paymentIntent.status === "succeeded") {
-      // save payment information to the server
-      // Update room status in db
+      
       const paymentInfo = {
         ...bookingInfo,
         transactionId: paymentIntent.id,
         date: new Date(),
       };
+      try {
+        // save payment information to the server
+        await saveBookingInfo(paymentInfo);
+
+        // Update room status in db
+        await updateStatus(bookingInfo?.roomId,true)
+      } catch (err) {
+        console.log(err.message);
+        toast.error(err?.message)
+      }
 
       setProcessing(false);
     }
