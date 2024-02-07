@@ -57,18 +57,6 @@ const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
                     Guest: {bookingInfo.guest.name}
                   </p>
                 </div>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    From: {format(new Date(bookingInfo.from), "PP")} - To:{" "}
-                    {format(new Date(bookingInfo.to), "PP")}
-                  </p>
-                </div>
-
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Price: $ {bookingInfo.price}
-                  </p>
-                </div>
                 <hr className="mt-8 " />
                 {/* Card data form */}
                 {/* Checkout form */}
