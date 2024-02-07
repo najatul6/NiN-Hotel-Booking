@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Elements } from "@stripe/react-stripe-js";
 import { format } from "date-fns";
-
+import { Fragment } from "react";
 import CheckOutForm from "../Form/CheckOutFrom";
 import { loadStripe } from "@stripe/stripe-js";
 
