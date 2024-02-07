@@ -10,6 +10,7 @@ import {
   updateStatus,
 } from "../../Utils/bookings";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutForm = ({ bookingInfo, closeModal }) => {
   const stripe = useStripe();
@@ -18,6 +19,7 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
   const [cardError, setCardError] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [processing, setProcessing] = useState(false);
+  const navigate = useNavigate();
 
   // Create Payment Intent
   useEffect(() => {
@@ -90,6 +92,7 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
         await updateStatus(bookingInfo?.roomId, true);
         const text = `Booking Successful! ${paymentIntent?.id}`;
         toast.success(text);
+        navigate("/dashboard/my-bookings");
       } catch (err) {
         console.log(err.message);
         toast.error(err?.message);
