@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import CheckOutForm from "../Form/CheckOutFrom";
 import { loadStripe } from "@stripe/stripe-js";
 
-
+const stripePromise= loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK)
 
 const BookingModal = ({ closeModal, isOpen, bookingInfo }) => {
  
