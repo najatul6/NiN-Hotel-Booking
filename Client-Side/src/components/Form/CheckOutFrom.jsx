@@ -4,7 +4,11 @@ import "./CheckOutFrom.css";
 import useAuth from "../../hooks/useAuth";
 import { ImSpinner9 } from "react-icons/im";
 import { useEffect } from "react";
-import { createPaymentIntent, saveBookingInfo, updateStatus } from "../../Utils/bookings";
+import {
+  createPaymentIntent,
+  saveBookingInfo,
+  updateStatus,
+} from "../../Utils/bookings";
 import toast from "react-hot-toast";
 
 const CheckOutForm = ({ bookingInfo, closeModal }) => {
@@ -73,7 +77,6 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
     console.log("payment intent", paymentIntent);
 
     if (paymentIntent.status === "succeeded") {
-      
       const paymentInfo = {
         ...bookingInfo,
         transactionId: paymentIntent.id,
@@ -84,10 +87,12 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
         await saveBookingInfo(paymentInfo);
 
         // Update room status in db
-        await updateStatus(bookingInfo?.roomId,true)
+        await updateStatus(bookingInfo?.roomId, true);
+        const text = `Booking Successful! ${paymentIntent?.id}`;
+        toast.success(text);
       } catch (err) {
         console.log(err.message);
-        toast.error(err?.message)
+        toast.error(err?.message);
       }
 
       setProcessing(false);
