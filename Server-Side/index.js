@@ -145,7 +145,7 @@ async function run() {
     // Generate client secret for stripe payment
     app.post("/create-payment-intent", verifyToken, async (req, res) => {
       const price = req.body;
-      const amount = parseInt(price * 100);
+      const amount = parseFloat(price * 100);
       if (!price || amount < 1) return;
       const { client_secret } = await stripe.paymentIntents.create({
         amount: amount,
