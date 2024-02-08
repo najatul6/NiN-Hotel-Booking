@@ -13,11 +13,6 @@ const HostMenu = () => {
         address="my-listings"
       />
       <MenuItem
-        icon={MdMapsHomeWork}
-        label="My Listings"
-        address="my-listings"
-      />
-      <MenuItem
         icon={MdOutlineManageHistory}
         label='Manage Bookings'
         address='manage-bookings'
