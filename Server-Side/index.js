@@ -186,6 +186,15 @@ async function run() {
     res.send(result)
     })
 
+    // Get All booking collection for Host
+    app.get('/bookings/host',verifyToken,async(req,res)=>{
+      const email = req.params.email
+      if(!email)return res.send([])
+      const query={host:email}
+    const result= await bookingsCollection.find(query).toArray
+    res.send(result)
+    })
+
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
