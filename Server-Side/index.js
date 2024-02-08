@@ -176,7 +176,7 @@ async function run() {
 
     // Get All booking collection for guest
     app.get("/bookings",verifyToken, async (req, res) => {
-      const email = req.params.email;
+      const email = req.query.email;
       if (!email) return res.send([]);
       const query = { 'guest.email': email };
       const result = await bookingsCollection.find(query).toArray();
@@ -186,7 +186,7 @@ async function run() {
 
     // Get All booking collection for Host
     app.get("/bookings/host",verifyToken, async (req, res) => {
-      const email = req.params.email;
+      const email = req.query.email;
       if (!email) return res.send([]);
       const query = { host: email };
       const result = await bookingsCollection.find(query).toArray();

@@ -68,7 +68,7 @@ const MyBookings = () => {
                   {/* Table Row Data */}
                   {bookings &&
                     bookings?.map((booking) => (
-                      <TableRow booking={booking} key={booking?._id} />
+                      <TableRow key={booking?._id} booking={booking} />
                     ))}
                 </tbody>
               </table>
