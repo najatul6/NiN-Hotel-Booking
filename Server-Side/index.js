@@ -14,7 +14,7 @@ const corsOptions = {
   origin: [
     "http://localhost:5173",
     "http://localhost:5174",
-    "https://ninsights-room-booking.web.app",
+    // "https://ninsights-room-booking.web.app",
   ],
   credentials: true,
   optionSuccessStatus: 200,
@@ -180,18 +180,18 @@ async function run() {
     });
 
     // Get All booking collection for guest
-    app.get("/bookings", verifyToken, async (req, res) => {
+    app.get("/bookings", async (req, res) => {
       const email = req.params.email;
-      // if (!email) return res.send([]);
+      if (!email) return res.send([]);
       const query = { 'guest.email': email };
       const result = await bookingsCollection.find(query).toArray();
       res.send(result);
     });
 
     // Get All booking collection for Host
-    app.get("/bookings/host", verifyToken, async (req, res) => {
+    app.get("/bookings/host", async (req, res) => {
       const email = req.params.email;
-      // if (!email) return res.send([]);
+      if (!email) return res.send([]);
       const query = { host: email };
       const result = await bookingsCollection.find(query).toArray();
       res.send(result);
