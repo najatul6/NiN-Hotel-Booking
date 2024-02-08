@@ -53,7 +53,9 @@ async function run() {
     // Collections
     const usersCollection = client.db("NiNRoomBookingDB").collection("users");
     const roomsCollection = client.db("NiNRoomBookingDB").collection("rooms");
-    const bookingsCollection = client.db("NiNRoomBookingDB").collection("bookings");
+    const bookingsCollection = client
+      .db("NiNRoomBookingDB")
+      .collection("bookings");
 
     // auth related api
     app.post("/jwt", async (req, res) => {
@@ -144,56 +146,56 @@ async function run() {
 
     // Generate client secret for stripe payment
     app.post("/create-payment-intent", verifyToken, async (req, res) => {
-      const {price} = req.body;
+      const { price } = req.body;
       const amount = parseFloat(price * 100);
       if (!price || amount < 1) return;
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,
-        currency: 'usd',
-        payment_method_types: ['card'],
+        currency: "usd",
+        payment_method_types: ["card"],
       });
       res.send({ clientSecret: paymentIntent?.client_secret });
     });
 
     // Save bookings info in bookings collection
-    app.post('/bookings',verifyToken,async(req,res)=>{
-      const booking=req.body
-      const result=await bookingsCollection.insertOne(booking)
+    app.post("/bookings", verifyToken, async (req, res) => {
+      const booking = req.body;
+      const result = await bookingsCollection.insertOne(booking);
       // Send Email
-      res.send(result)
-    })
+      res.send(result);
+    });
 
     // Update room booking status
-    app.patch('/rooms/status/:id',async(req,res)=>{
+    app.patch("/rooms/status/:id", async (req, res) => {
       const id = req.params.id;
-      const status =req.body.status;
-      const query={_id:new ObjectId(id)}
+      const status = req.body.status;
+      const query = { _id: new ObjectId(id) };
       const updateDoc = {
-        $set:{
-          booked:status,
-        }
-      }
-      const result=await roomsCollection.updateOne(query,updateDoc)
-      res.send(result)
-    })
+        $set: {
+          booked: status,
+        },
+      };
+      const result = await roomsCollection.updateOne(query, updateDoc);
+      res.send(result);
+    });
 
     // Get All booking collection for guest
-    app.get('/bookings',verifyToken,async(req,res)=>{
-      const email = req.params.email
-      if(!email)return res.send([])
-      const query={'guest.email':email}
-    const result= await bookingsCollection.find(query).toArray
-    res.send(result)
-    })
+    app.get("/bookings", verifyToken, async (req, res) => {
+      const email = req.params.email;
+      // if (!email) return res.send([]);
+      const query = { 'guest.email': email };
+      const result = await bookingsCollection.find(query).toArray();
+      res.send(result);
+    });
 
     // Get All booking collection for Host
-    app.get('/bookings/host',verifyToken,async(req,res)=>{
-      const email = req.params.email
-      if(!email)return res.send([])
-      const query={host:email}
-    const result= await bookingsCollection.find(query).toArray
-    res.send(result)
-    })
+    app.get("/bookings/host", verifyToken, async (req, res) => {
+      const email = req.params.email;
+      // if (!email) return res.send([]);
+      const query = { host: email };
+      const result = await bookingsCollection.find(query).toArray();
+      res.send(result);
+    });
 
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();

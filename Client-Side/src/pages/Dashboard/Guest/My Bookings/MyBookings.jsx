@@ -14,6 +14,7 @@ const MyBookings = () => {
     enabled: !loading,
     queryFn: async () => await getBookings(user?.email),
   });
+  console.log(bookings)
   return (
     <>
       <Helmet>
