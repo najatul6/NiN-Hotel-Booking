@@ -20,6 +20,12 @@ export const updateStatus = async (id, status) => {
 
 // Get all bookings for a guest by email
 export const getBookings = async (email) => {
-  const { data } = await axiosSecure(`/booking?email=${email}`);
+  const { data } = await axiosSecure(`/bookings?email=${email}`);
+  return data;
+};
+
+// Get all bookings for a host by email
+export const getHostBookings = async (email) => {
+  const { data } = await axiosSecure(`/bookings/host?email=${email}`);
   return data;
 };
