@@ -6,8 +6,8 @@ import BookingModal from "../../Modal/BookingModal";
 import useAuth from "../../../hooks/useAuth";
 
 const RoomReservation = ({ roomData }) => {
-  let [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
+  let [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
     setIsOpen(false);

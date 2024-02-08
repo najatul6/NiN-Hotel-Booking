@@ -25,13 +25,11 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 const verifyToken = async (req, res, next) => {
   const token = req.cookies?.token;
-  console.log(token);
   if (!token) {
     return res.status(401).send({ message: "unauthorized access" });
   }
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
     if (err) {
-      console.log(err);
       return res.status(401).send({ message: "unauthorized access" });
     }
     req.user = decoded;
@@ -96,7 +94,6 @@ async function run() {
       const query = { email: email };
       const options = { upsert: true };
       const isExist = await usersCollection.findOne(query);
-      console.log("User found?----->", isExist);
       if (isExist) return res.send(isExist);
       const result = await usersCollection.updateOne(
         query,
@@ -180,16 +177,17 @@ async function run() {
     });
 
     // Get All booking collection for guest
-    app.get("/bookings", async (req, res) => {
+    app.get("/bookings",verifyToken, async (req, res) => {
       const email = req.params.email;
       if (!email) return res.send([]);
       const query = { 'guest.email': email };
       const result = await bookingsCollection.find(query).toArray();
       res.send(result);
+      console.log(result)
     });
 
     // Get All booking collection for Host
-    app.get("/bookings/host", async (req, res) => {
+    app.get("/bookings/host",verifyToken, async (req, res) => {
       const email = req.params.email;
       if (!email) return res.send([]);
       const query = { host: email };
