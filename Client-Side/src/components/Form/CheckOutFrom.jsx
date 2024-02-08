@@ -54,7 +54,7 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
       setCardError(error.message);
     } else {
       setCardError("");
-      console.log("payment method", paymentMethod);
+      
     }
 
     setProcessing(true);
