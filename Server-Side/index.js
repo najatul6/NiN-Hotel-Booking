@@ -14,7 +14,7 @@ const corsOptions = {
   origin: [
     "http://localhost:5173",
     "http://localhost:5174",
-    "https://ninsights-room-booking.web.app/",
+    "https://ninsights-room-booking.web.app",
   ],
   credentials: true,
   optionSuccessStatus: 200,
@@ -144,15 +144,15 @@ async function run() {
 
     // Generate client secret for stripe payment
     app.post("/create-payment-intent", verifyToken, async (req, res) => {
-      const price = req.body;
+      const {price} = req.body;
       const amount = parseFloat(price * 100);
       if (!price || amount < 1) return;
-      const { client_secret } = await stripe.paymentIntents.create({
+      const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,
-        currency: "usd",
-        payment_method_types: ["card"],
+        currency: 'usd',
+        payment_method_types: ['card'],
       });
-      res.send({ clientSecret: client_secret });
+      res.send({ clientSecret: paymentIntent?.client_secret });
     });
 
     // Save bookings info in bookings collection

@@ -137,7 +137,7 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
             {processing ? (
               <ImSpinner9 className="m-auto animate-spin" size={24} />
             ) : (
-              `Pay ${bookingInfo.price}$`
+              `Pay ${bookingInfo?.price}$`
             )}
           </button>
         </div>

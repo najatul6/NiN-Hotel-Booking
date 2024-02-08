@@ -1,5 +1,6 @@
 import axiosSecure from "./axiosSecure";
 
+
 // Create Payment intent
 export const createPaymentIntent = async (price) => {
   const { data } = await axiosSecure.post("/create-payment-intent", price);
@@ -15,6 +16,6 @@ export const saveBookingInfo = async (paymentInfo) => {
 
 // Update room status after room booking in db
 export const updateStatus = async (id,status) => {
-  const { data } = await axiosSecure.post(`/rooms/status/${id}`, {status});
+  const { data } = await axiosSecure.patch(`/rooms/status/${id}`, {status});
   return data;
 };
