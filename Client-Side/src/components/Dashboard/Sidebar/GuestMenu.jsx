@@ -1,8 +1,10 @@
+import { GrUserAdmin } from "react-icons/gr";
+import useRole from "../../../hooks/useRole";
 import MenuItem from "./MenuItem";
 import { BsFingerprint } from "react-icons/bs";
 
 const GuestMenu = () => {
-  const 
+  const [role]=useRole()
   return (
     <>
       <MenuItem
