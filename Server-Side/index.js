@@ -14,7 +14,8 @@ const corsOptions = {
   origin: [
     "http://localhost:5173",
     "http://localhost:5174",
-    // "https://ninsights-room-booking.web.app",
+    "https://ninsights-room-booking.web.app",
+    "https://hotel-nin-server.vercel.app",
   ],
   credentials: true,
   optionSuccessStatus: 200,
@@ -175,21 +176,27 @@ async function run() {
     });
 
     // Get All booking collection for guest
-    app.get("/bookings",verifyToken, async (req, res) => {
+    app.get("/bookings", verifyToken, async (req, res) => {
       const email = req.query.email;
       if (!email) return res.send([]);
-      const query = { 'guest.email': email };
+      const query = { "guest.email": email };
       const result = await bookingsCollection.find(query).toArray();
       res.send(result);
-      console.log(result)
+      console.log(result);
     });
 
     // Get All booking collection for Host
-    app.get("/bookings/host",verifyToken, async (req, res) => {
+    app.get("/bookings/host", verifyToken, async (req, res) => {
       const email = req.query.email;
       if (!email) return res.send([]);
       const query = { host: email };
       const result = await bookingsCollection.find(query).toArray();
+      res.send(result);
+    });
+
+    // Get all users from usersCollection
+    app.get("/users", verifyToken, async (req, res) => {
+      const result = await usersCollection.find().toArray();
       res.send(result);
     });
 

@@ -35,7 +35,9 @@ const Cards = ({ room }) => {
           "
           ></div>
         </div>
-        <div className="font-semibold text-lg">{location}</div>
+        <div className="font-semibold text-lg">
+          {location.length>20?location.slice(0,19)+"...":location}
+        </div>
         <div className="font-light text-neutral-500">
           5 nights . June 19 - 26
         </div>
