@@ -9,7 +9,7 @@ const ManageUsers = () => {
     queryKey: ["users"],
     queryFn: async () => getUser(),
   });
-  if(isLoading) return <Loader/>;
+  if (isLoading) return <Loader />;
   return (
     <>
       <div className="container mx-auto px-4 sm:px-8">
@@ -49,7 +49,13 @@ const ManageUsers = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>{/* User data table row */}{users?.map(user=><UserDataRow key={user?._id} user={user} />)}</tbody>
+                <tbody>
+                  {/* User data table row */}
+                  {users &&
+                    users.map((user) => (
+                      <UserDataRow key={user?._id} user={user} />
+                    ))}
+                </tbody>
               </table>
             </div>
           </div>
