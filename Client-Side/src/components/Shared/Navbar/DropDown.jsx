@@ -26,9 +26,9 @@ const DropDown = () => {
           <div className="hidden md:block">
             {/* Avatar */}
             <img
-              className="rounded-full"
+              className="rounded-full w-[35px] h-[35px]"
               referrerPolicy="no-referrer"
-              src={user && user.photoURL ? user.photoURL : avatarImg}
+              src={user && user?.photoURL ? user?.photoURL : avatarImg}
               alt="profile"
               height="30"
               width="30"
