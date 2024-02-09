@@ -59,7 +59,7 @@ const AddRoom = () => {
       toast.success("Room Added!");
       navigate("/dashboard/my-listings");
     } catch (err) {
-      console.log(err?.message);
+      
       toast.error(err?.message);
     } finally {
       setLoading(false);

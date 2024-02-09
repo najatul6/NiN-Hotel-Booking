@@ -15,10 +15,11 @@ const GuestMenu = () => {
   const modalHandler = async () => {
     try {
       const data =await becomeHost(user?.email);
+      console.log(data)
       if(data.modifiedcount>0){
         toast.success('Success! Please wait for admin confirmation.')
       }else{
-        toast.
+        toast.success('Pending, wait for admin approval✋')
       }
     } catch (err) {
       toast.error(err.message);
