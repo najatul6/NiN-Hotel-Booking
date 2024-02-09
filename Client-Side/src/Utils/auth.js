@@ -25,20 +25,19 @@ export const clearCookie = async () => {
 };
 
 // Get user role
-export const getRole = async email => {
+export const getRole = async (email) => {
   const { data } = await axiosSecure.get(`/user/${email}`);
-  return data.role
+  return data.role;
 };
 
-
 // Get all user
-export const getUser = async()=>{
-  const {data}= await axiosSecure.get('/users')
-  return data
-}
+export const getUser = async () => {
+  const { data } = await axiosSecure.get("/users");
+  return data;
+};
 
 // Update User data in Database
-export const updateRole = async ({email,role}) => {
+export const updateRole = async ({ email, role }) => {
   const currentUser = {
     email,
     role,
@@ -46,4 +45,14 @@ export const updateRole = async ({email,role}) => {
   };
   const { data } = await axiosSecure.put(`/users/update/${email}`, currentUser);
   return data;
+};
+
+// Become a host
+export const becomeHost = async (email) => {
+  const currentUser = {
+    email,
+    status: "Requested",
+  };
+  const { data } = await axiosSecure.put(`/users/${email}`, currentUser);
+  return data
 };

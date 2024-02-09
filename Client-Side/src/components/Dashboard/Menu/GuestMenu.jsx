@@ -5,14 +5,26 @@ import { BsFingerprint } from "react-icons/bs";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import HostRequestModal from "../../Modal/HostRequestModal";
+import { becomeHost } from "../../../Utils/auth";
+import toast from "react-hot-toast";
 
 const GuestMenu = () => {
   const [role] = useRole();
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const modalHandler = async () => {
-    // Request to be host
-    console.log('request neyem handle')
+    try {
+      const data =await becomeHost(user?.email);
+      if(data.modifiedcount>0){
+        toast.success('Success! Please wait for admin confirmation.')
+      }else{
+        toast.
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsOpen(false);
+    }
   };
   return (
     <>
@@ -22,7 +34,10 @@ const GuestMenu = () => {
         address="my-bookings"
       />
       {role === "guest" && (
-        <div onClick={()=>setIsOpen(true)} className="flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform text-gray-600  hover:bg-gray-300   hover:text-gray-700 cursor-pointer">
+        <div
+          onClick={() => setIsOpen(true)}
+          className="flex items-center px-4 py-2 mt-5  transition-colors duration-300 transform text-gray-600  hover:bg-gray-300   hover:text-gray-700 cursor-pointer"
+        >
           <GrUserAdmin className="w-5 h-5" />
 
           <span className="mx-4 font-medium">Become A Host</span>
@@ -30,7 +45,11 @@ const GuestMenu = () => {
       )}
 
       {/* Request host Modal */}
-      <HostRequestModal modalHandler={modalHandler} isOpen={isOpen} closeModal={setIsOpen}/>
+      <HostRequestModal
+        modalHandler={modalHandler}
+        isOpen={isOpen}
+        closeModal={setIsOpen}
+      />
     </>
   );
 };
