@@ -1,12 +1,21 @@
 import { useState } from "react";
 import UpdateUserModal from "../Modal/UpdateUserModal";
+import { updateRole } from "../../Utils/auth";
+import toast from "react-hot-toast";
 
-const UserDataRow = ({ user }) => {
+const UserDataRow = ({ user,refetch }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const modalHandler = async(selected) => {
-
+  const modalHandler = async (role) => {
     // Update user role
-    console.log(selected)
+    try {
+      await updateRole({ email: user?.email, role });
+      refetch()
+      toast.success('User role updated!')
+    } catch (err) {
+      toast.error(err?.message);
+    }finally{
+      setIsOpen(false)
+    }
   };
   return (
     <tr>
@@ -20,7 +29,7 @@ const UserDataRow = ({ user }) => {
         {user?.status ? (
           <p
             className={`${
-              user.status === "Verified" ? "text-green-500" : "text-yellow-500"
+              user.status === "Verified" ? "text-green-500" : "text-deep-orange"
             } whitespace-no-wrap`}
           >
             {user.status}

@@ -5,7 +5,7 @@ import Loader from "../../../../components/Shared/Loader";
 import UserDataRow from "../../../../components/TableRows/UserDataRow";
 
 const ManageUsers = () => {
-  const { data: users = [], isLoading } = useQuery({
+  const { data: users = [], isLoading,refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => getUser(),
   });
@@ -53,7 +53,7 @@ const ManageUsers = () => {
                   {/* User data table row */}
                   {users &&
                     users.map((user) => (
-                      <UserDataRow key={user?._id} user={user} />
+                      <UserDataRow key={user?._id} user={user} refetch={refetch} />
                     ))}
                 </tbody>
               </table>
