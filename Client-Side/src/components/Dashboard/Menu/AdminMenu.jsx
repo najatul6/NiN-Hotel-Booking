@@ -1,4 +1,4 @@
-import MenuItem from "./MenuItem";
+import MenuItem from "../Sidebar/MenuItem";
 import { FaUserCog } from "react-icons/fa";
 
 const AdminMenu = () => {

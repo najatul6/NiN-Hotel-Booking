@@ -1,4 +1,4 @@
-import MenuItem from "./MenuItem";
+import MenuItem from "../Sidebar/MenuItem";
 import { BsHouseAddFill } from "react-icons/bs";
 import { MdMapsHomeWork, MdOutlineManageHistory } from "react-icons/md";
 
