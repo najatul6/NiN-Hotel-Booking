@@ -3,8 +3,10 @@ import UpdateUserModal from "../Modal/UpdateUserModal";
 
 const UserDataRow = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const modalHandler = () => {
+  const modalHandler = async(selected) => {
+
     // Update user role
+    console.log(selected)
   };
   return (
     <tr>
