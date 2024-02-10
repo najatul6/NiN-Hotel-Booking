@@ -98,7 +98,7 @@ async function run() {
           const result = await usersCollection.updateOne(
             query,
             {
-              $set: { user}
+              $set:  user
             },
             options
           );
