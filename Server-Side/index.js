@@ -66,6 +66,17 @@ async function run() {
         return res.status(401).send({ message: "unauthorized access" });
       next();
     };
+
+    // For host
+    const verifyHost = async (req, res, next) => {
+      const user = req.user;
+      const query = { email: user?.email };
+      const result = await usersCollection.findOne(query);
+      if (!result || result?.role !== "host")
+        return res.status(401).send({ message: "unauthorized access" });
+      next();
+    };
+
     // auth related api
     app.post("/jwt", async (req, res) => {
       const user = req.body;
@@ -209,7 +220,7 @@ async function run() {
     });
 
     // Get All booking collection for Host
-    app.get("/bookings/host", verifyToken, async (req, res) => {
+    app.get("/bookings/host", verifyToken,verifyHost, async (req, res) => {
       const email = req.query.email;
       if (!email) return res.send([]);
       const query = { host: email };
