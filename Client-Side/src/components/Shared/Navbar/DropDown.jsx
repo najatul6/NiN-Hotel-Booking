@@ -17,7 +17,6 @@ const DropDown = () => {
   const modalHandler = async () => {
     try {
       const data = await becomeHost(user?.email);
-      console.log(data);
       if (data.modifiedCount > 0) {
         toast.success("Success! Please wait for admin confirmation.");
       } else {
@@ -36,7 +35,7 @@ const DropDown = () => {
         <div className="hidden md:block">
           {(!user || !role || role === "guest") && (
             <button
-              onClick={() => isModalOpen(true)}
+              onClick={() => setIsModalOpen(true)}
               disabled={!user}
               className="disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
             >
