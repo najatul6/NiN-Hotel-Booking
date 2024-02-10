@@ -24,7 +24,7 @@ const DropDown = () => {
     } catch (err) {
       toast.error(err.message);
     } finally {
-      setIsOpen(false);
+      setIsModalOpen(false);
     }
   };
   return (
