@@ -152,7 +152,7 @@ async function run() {
     });
 
     // Get all rooms for host
-    app.get("/rooms/:email", async (req, res) => {
+    app.get("/rooms/:email",verifyToken,verifyHost, async (req, res) => {
       const email = req.params.email;
       const query = { "host.email": email };
       const result = await roomsCollection.find(query).toArray();
