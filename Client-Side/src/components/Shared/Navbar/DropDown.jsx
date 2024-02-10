@@ -4,10 +4,29 @@ import { AiOutlineMenu } from "react-icons/ai";
 import avatarImg from "../../../assets/avatar.jpg";
 import { Link } from "react-router-dom";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import HostRequestModal from "../../Modal/HostRequestModal";
+import { becomeHost } from "../../../Utils/auth";
+import toast from "react-hot-toast";
 
 const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, logOut } = useAuth();
+  const modalHandler = async () => {
+    try {
+      const data = await becomeHost(user?.email);
+      console.log(data);
+      if (data.modifiedCount > 0) {
+        toast.success("Success! Please wait for admin confirmation.");
+      } else {
+        toast.success("Pending, wait for admin approval✋");
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsOpen(false);
+    }
+  };
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -58,7 +77,8 @@ const DropDown = () => {
                   onClick={logOut}
                   className="px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer flex items-center justify-between"
                 >
-                  Log Out <RiLogoutCircleRLine className="animate-pulse font-bold text-deep-orange"/>
+                  Log Out{" "}
+                  <RiLogoutCircleRLine className="animate-pulse font-bold text-deep-orange" />
                 </div>
               </>
             ) : (
@@ -80,6 +100,11 @@ const DropDown = () => {
           </div>
         </div>
       )}
+      <HostRequestModal
+        modalHandler={modalHandler}
+        isOpen={isModalOpen}
+        closeModal={setIsModalOpen}
+      />
     </div>
   );
 };
