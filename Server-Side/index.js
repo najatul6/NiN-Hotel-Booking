@@ -38,6 +38,9 @@ const verifyToken = async (req, res, next) => {
   });
 };
 
+// Send email
+
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.DB_URI, {
   serverApi: {
@@ -152,7 +155,7 @@ async function run() {
     });
 
     // Get all rooms for host
-    app.get("/rooms/:email",verifyToken,verifyHost, async (req, res) => {
+    app.get("/rooms/:email", verifyToken, verifyHost, async (req, res) => {
       const email = req.params.email;
       const query = { "host.email": email };
       const result = await roomsCollection.find(query).toArray();
@@ -220,7 +223,7 @@ async function run() {
     });
 
     // Get All booking collection for Host
-    app.get("/bookings/host", verifyToken,verifyHost, async (req, res) => {
+    app.get("/bookings/host", verifyToken, verifyHost, async (req, res) => {
       const email = req.query.email;
       if (!email) return res.send([]);
       const query = { host: email };
