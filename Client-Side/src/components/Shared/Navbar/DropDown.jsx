@@ -7,10 +7,12 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import HostRequestModal from "../../Modal/HostRequestModal";
 import { becomeHost } from "../../../Utils/auth";
 import toast from "react-hot-toast";
+import useRole from "../../../hooks/useRole";
 
 const DropDown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [role] = useRole();
   const { user, logOut } = useAuth();
   const modalHandler = async () => {
     try {
@@ -32,13 +34,15 @@ const DropDown = () => {
       <div className="flex flex-row items-center gap-3">
         {/* Become A Host btn */}
         <div className="hidden md:block">
-          <button
-            onClick={() => isModalOpen(true)}
-            disabled={!user}
-            className="disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
-          >
-            Host your home
-          </button>
+          {(!user || !role || role === "guest") && (
+            <button
+              onClick={() => isModalOpen(true)}
+              disabled={!user}
+              className="disabled:cursor-not-allowed cursor-pointer hover:bg-neutral-100 py-3 px-4 text-sm font-semibold rounded-full  transition"
+            >
+              Host your home
+            </button>
+          )}
         </div>
         {/* Dropdown btn */}
         <div
