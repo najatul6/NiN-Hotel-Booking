@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 const port = process.env.PORT || 5000;
 const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
+const nodemailer = require('nodemailer')
 
 // middleware
 const corsOptions = {
@@ -40,6 +41,17 @@ const verifyToken = async (req, res, next) => {
 
 // Send email
 const sendEmail=()=>{
+  // Create a transporter
+  const transporter= nodemailer.createTransport({
+    service:'gmail',
+    host:'smtp.gmail.com',
+    port:587,
+    secure:false,
+    auth:{
+      user:process.env.USER,
+      pass:process.env.PASS,
+    }
+  })
   
 }
 
