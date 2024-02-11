@@ -1,3 +1,6 @@
+import { BsFillCartPlusFill, BsFillHouseDoorFill } from "react-icons/bs";
+import { FaDollarSign } from "react-icons/fa";
+import { GiPlayerTime } from "react-icons/gi";
 
 const HostStatistics = () => {
     return (
