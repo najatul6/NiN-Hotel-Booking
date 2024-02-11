@@ -52,7 +52,15 @@ const sendEmail=()=>{
       pass:process.env.PASS,
     }
   })
-  
+  // verify connection
+  transporter.verify((error,success)=>{
+    if(error){
+      console.log(error)
+    }else{
+      console.log('succes from emails',success)
+    }
+  })
+
 }
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -65,6 +73,7 @@ const client = new MongoClient(process.env.DB_URI, {
 });
 
 async function run() {
+  sendEmail()
   try {
     // Collections
     const usersCollection = client.db("NiNRoomBookingDB").collection("users");
