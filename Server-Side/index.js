@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const morgan = require("morgan");
 const port = process.env.PORT || 5000;
 const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
 // middleware
 const corsOptions = {
@@ -40,28 +40,27 @@ const verifyToken = async (req, res, next) => {
 };
 
 // Send email
-const sendEmail=()=>{
+const sendEmail = () => {
   // Create a transporter
-  const transporter= nodemailer.createTransport({
-    service:'gmail',
-    host:'smtp.gmail.com',
-    port:587,
-    secure:false,
-    auth:{
-      user:process.env.USER,
-      pass:process.env.PASS,
-    }
-  })
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS,
+    },
+  });
   // verify connection
-  transporter.verify((error,success)=>{
-    if(error){
-      console.log(error)
-    }else{
-      console.log('succes from emails',success)
+  transporter.verify((error, success) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("succes from emails", success);
     }
-  })
-
-}
+  });
+};
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(process.env.DB_URI, {
@@ -73,7 +72,6 @@ const client = new MongoClient(process.env.DB_URI, {
 });
 
 async function run() {
-  sendEmail()
   try {
     // Collections
     const usersCollection = client.db("NiNRoomBookingDB").collection("users");
@@ -217,7 +215,20 @@ async function run() {
     app.post("/bookings", verifyToken, async (req, res) => {
       const booking = req.body;
       const result = await bookingsCollection.insertOne(booking);
-      // Send Email
+      // Send Email.....
+      if (result.insertedId) {
+        // To guest
+        sendEmail(booking.guest.email, {
+          subject: "Booking Successful!",
+          message: `Room is Ready, Your Transaction Id: ${booking.transactionId}`,
+        });
+
+        // To Host
+        sendEmail(booking.host, {
+          subject: "Your room got booked!",
+          message: `Room owner is coming.please Checkout. ${booking.guest.name} is ready to come!`,
+        });
+      }
       res.send(result);
     });
 
@@ -274,6 +285,33 @@ async function run() {
       };
       const result = await usersCollection.updateOne(query, updateDoc, options);
       res.send(result);
+    });
+
+    // Admin Stat Data
+    app.get("/admin-stat", verifyToken, verifyAdmin, async (req, res) => {
+      const bookingsDetails = await bookingsCollection
+        .find({}, { projection: { date: 1, price: 1 } })
+        .toArray();
+      const userCount = await usersCollection.countDocuments();
+      const roomCount = await roomsCollection.countDocuments();
+      const totalSale = bookingsDetails.reduce(
+        (sum, data) => sum + data.price,
+        0
+      );
+
+      const chartData = bookingsDetails.map((data) => {
+        const day = new Date(data.date).getDate();
+        const month = new Date(data.date).getMonth() + 1;
+        return [day + "/" + month, data.price];
+      });
+      chartData.unshift(["Day", "Sale"]);
+      res.send({
+        totalSale,
+        bookingCount: bookingsDetails.length,
+        userCount,
+        roomCount,
+        chartData,
+      });
     });
 
     // Connect the client to the server	(optional starting in v4.7)
