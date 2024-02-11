@@ -8,12 +8,10 @@ import { getAdminStat } from '../../../../Utils/imageUpload'
 import SalesLineChart from './SalesLineChart'
 
 const AdminStatistics = () => {
-  const [statData, setStatData] = useState({})
-  useEffect(() => {
-    getAdminStat().then(data => {
-      setStatData(data)
-    })
-  }, [])
+    const [statData, setStatData] = useState({})
+    useEffect(() => {
+      getAdminStat().then(data => setStatData(data))
+    }, [])
   return (
     <div>
       <div className='mt-12'>
@@ -31,7 +29,7 @@ const AdminStatistics = () => {
                 Total Sales
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                $345
+                ${statData?.totalSale}
               </h4>
             </div>
           </div>
@@ -47,7 +45,7 @@ const AdminStatistics = () => {
                 Total User
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                23
+                {statData?.userCount}
               </h4>
             </div>
           </div>
@@ -63,7 +61,7 @@ const AdminStatistics = () => {
                 Total Bookings
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                345
+                {statData?.bookingCount}
               </h4>
             </div>
           </div>
@@ -79,7 +77,7 @@ const AdminStatistics = () => {
                 Total Rooms
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                454
+                {statData?.roomCount}
               </h4>
             </div>
           </div>
@@ -87,12 +85,13 @@ const AdminStatistics = () => {
 
         <div className='mb-4 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3'>
           {/* Total Sales Graph */}
+
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2'>
-            <SalesLineChart />
+            <SalesLineChart data={statData?.chartData} />
           </div>
           {/* Calender */}
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden'>
-            <Calendar color='#F43F5E' />
+            <Calendar color='#ff6d01' />
           </div>
         </div>
       </div>
