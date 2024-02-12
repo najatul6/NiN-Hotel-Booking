@@ -6,6 +6,7 @@ import { Calendar } from "react-date-range";
 import { getGuestStat } from "../../../../Utils/imageUpload";
 import Loader from "../../../../components/Shared/Loader";
 import { useQuery } from "@tanstack/react-query";
+import { formatDistanceToNow } from "date-fns";
 
 const GuestStatistics = () => {
   const { data: statData = [], isLoading } = useQuery({
@@ -64,7 +65,8 @@ const GuestStatistics = () => {
                 Guest Since...
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                {statData?.guestSince} Days
+              {statData?.guestSince &&
+                  formatDistanceToNow(new Date(statData.guestSince))}
               </h4>
             </div>
           </div>
