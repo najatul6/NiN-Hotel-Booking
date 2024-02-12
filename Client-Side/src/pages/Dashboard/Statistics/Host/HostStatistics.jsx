@@ -84,9 +84,7 @@ const HostStatistics = () => {
               <SalesLineChart />
             </div>
             {/* Calender */}
-            <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden'>
-              <Calendar color='#ff6d01' />
-            </div>
+            
           </div>
         </div>
       </div>
