@@ -3,14 +3,17 @@ import { FaDollarSign } from "react-icons/fa";
 import { GiPlayerTime } from "react-icons/gi";
 import SalesLineChart from "../Admin/SalesLineChart";
 import { Calendar } from "react-date-range";
-import { useEffect, useState } from "react";
 import { getHostStat } from "../../../../Utils/imageUpload";
+import Loader from "../../../../components/Shared/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { formatDistanceToNow } from "date-fns";
 
 const HostStatistics = () => {
-  const [statData, setStatData] = useState({});
-  useEffect(() => {
-    getHostStat().then((data) => setStatData(data));
-  }, []);
+  const { data: statData = [], isLoading } = useQuery({
+    queryKey: ['statData'],
+    queryFn: async () => await getHostStat(),
+  })
+  if (isLoading) return <Loader />
   return (
     <div>
       <div className="mt-12">
@@ -78,7 +81,7 @@ const HostStatistics = () => {
                 Host Since...
               </p>
               <h4 className="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                {statData?.hostSince} Days
+                {statData?.hostSince && formatDistanceToNow(new Date(statData.hostSince))} 
               </h4>
             </div>
           </div>

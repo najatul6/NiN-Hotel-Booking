@@ -2,16 +2,18 @@
 import { Calendar } from 'react-date-range'
 import { FaUserAlt, FaDollarSign } from 'react-icons/fa'
 import { BsFillCartPlusFill, BsFillHouseDoorFill } from 'react-icons/bs'
-import { useState } from 'react'
-import { useEffect } from 'react'
+
 import { getAdminStat } from '../../../../Utils/imageUpload'
 import SalesLineChart from './SalesLineChart'
+import { useQuery } from '@tanstack/react-query'
+import Loader from '../../../../components/Shared/Loader'
 
 const AdminStatistics = () => {
-    const [statData, setStatData] = useState({})
-    useEffect(() => {
-      getAdminStat().then(data => setStatData(data))
-    }, [])
+  const { data: statData = [], isLoading } = useQuery({
+    queryKey: ['statData'],
+    queryFn: async () => await getAdminStat(),
+  })
+  if (isLoading) return <Loader />
   return (
     <div>
       <div className='mt-12'>
