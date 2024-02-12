@@ -22,3 +22,9 @@ export const getHostStat=async()=>{
   const {data}=await axiosSecure('/host-stat')
   return data
 }
+
+// Guest Stats
+export const getGuestStat=async()=>{
+  const {data}=await axiosSecure('/guest-stat')
+  return data
+}

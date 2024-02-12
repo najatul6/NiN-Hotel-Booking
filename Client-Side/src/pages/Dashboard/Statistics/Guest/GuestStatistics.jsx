@@ -3,8 +3,16 @@ import { FaDollarSign } from "react-icons/fa";
 import { GiPlayerTime } from "react-icons/gi";
 import SalesLineChart from "../Admin/SalesLineChart";
 import { Calendar } from "react-date-range";
+import { getGuestStat } from "../../../../Utils/imageUpload";
+import Loader from "../../../../components/Shared/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 const GuestStatistics = () => {
+  const { data: statData = [], isLoading } = useQuery({
+    queryKey: ['statData'],
+    queryFn: async () => await getGuestStat(),
+  })
+  if (isLoading) return <Loader />
     return (
         <div>
       <div className='mt-12'>
@@ -22,7 +30,7 @@ const GuestStatistics = () => {
                 Total Spent
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                $343
+                ${statData?.totalSpent}
               </h4>
             </div>
           </div>
@@ -39,7 +47,7 @@ const GuestStatistics = () => {
                 Total Bookings
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                34
+                {statData?.bookingCount}
               </h4>
             </div>
           </div>
@@ -56,7 +64,7 @@ const GuestStatistics = () => {
                 Guest Since...
               </p>
               <h4 className='block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900'>
-                3 Days
+                {statData?.guestSince} Days
               </h4>
             </div>
           </div>
@@ -65,7 +73,7 @@ const GuestStatistics = () => {
         <div className='mb-4 grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3'>
           {/* Total Sales Graph */}
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2'>
-            <SalesLineChart />
+            <SalesLineChart data={statData?.chartData}/>
           </div>
           {/* Calender */}
           <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden'>

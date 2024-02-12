@@ -314,32 +314,92 @@ async function run() {
       });
     });
 
-    // Host Stat Data
-    app.get("/host-stat", verifyToken, verifyHost, async (req, res) => {
-      const bookingsDetails = await bookingsCollection
-        .find({}, { projection: { date: 1, price: 1 } })
-        .toArray();
-      const userCount = await usersCollection.countDocuments();
-      const roomCount = await roomsCollection.countDocuments();
-      const totalSale = bookingsDetails.reduce(
-        (sum, data) => sum + data.price,
-        0
-      );
+    // Host Statistics
+    app.get('/host-stat', verifyToken, verifyHost, async (req, res) => {
+      const { email } = req.user
 
-      const chartData = bookingsDetails.map((data) => {
-        const day = new Date(data.date).getDate();
-        const month = new Date(data.date).getMonth() + 1;
-        return [day + "/" + month, data.price];
-      });
-      chartData.unshift(["Day", "Sale"]);
+      const bookingsDetails = await bookingsCollection
+        .find(
+          { host: email },
+          {
+            projection: {
+              date: 1,
+              price: 1,
+            },
+          }
+        )
+        .toArray()
+      const roomCount = await roomsCollection.countDocuments({
+        'host.email': email,
+      })
+      const totalSale = bookingsDetails.reduce(
+        (acc, data) => acc + data.price,
+        0
+      )
+      const chartData = bookingsDetails.map(data => {
+        const day = new Date(data.date).getDate()
+        const month = new Date(data.date).getMonth() + 1
+        return [day + '/' + month, data.price]
+      })
+      chartData.splice(0, 0, ['Day', 'Sale'])
+      const { timestamp } = await usersCollection.findOne(
+        { email },
+        {
+          projection: {
+            timestamp: 1,
+          },
+        }
+      )
       res.send({
         totalSale,
         bookingCount: bookingsDetails.length,
-        userCount,
         roomCount,
         chartData,
-      });
-    });
+        hostSince: timestamp,
+      })
+    })
+    
+    // Guest Statistics
+    app.get('/guest-stat', verifyToken, async (req, res) => {
+      const { email } = req.user
+
+      const bookingsDetails = await bookingsCollection
+        .find(
+          { 'guest.email': email },
+          {
+            projection: {
+              date: 1,
+              price: 1,
+            },
+          }
+        )
+        .toArray()
+
+      const chartData = bookingsDetails.map(data => {
+        const day = new Date(data.date).getDate()
+        const month = new Date(data.date).getMonth() + 1
+        return [day + '/' + month, data.price]
+      })
+      chartData.splice(0, 0, ['Day', 'Reservation'])
+      const { timestamp } = await usersCollection.findOne(
+        { email },
+        {
+          projection: {
+            timestamp: 1,
+          },
+        }
+      )
+      const totalSpent = bookingsDetails.reduce(
+        (acc, data) => acc + data.price,
+        0
+      )
+      res.send({
+        bookingCount: bookingsDetails.length,
+        chartData,
+        guestSince: timestamp,
+        totalSpent,
+      })
+    })
 
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
