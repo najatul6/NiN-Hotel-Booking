@@ -61,7 +61,7 @@ const HostStatistics = () => {
             </div>
   
             {/* Users Card */}
-            <div className='relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md'>
+            <div className=''>
               <div
                 className={`bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center from-green-600 to-green-400 text-white shadow-green-500/40`}
               >
