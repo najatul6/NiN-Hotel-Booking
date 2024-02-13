@@ -25,7 +25,6 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
   useEffect(() => {
     if (bookingInfo?.price > 0) {
       createPaymentIntent({ price: bookingInfo?.price }).then((data) => {
-        console.log(data?.clientSecret);
         setClientSecret(data?.clientSecret);
       });
     }
@@ -50,7 +49,6 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
     });
 
     if (error) {
-      console.log("error", error);
       setCardError(error.message);
     } else {
       setCardError("");
@@ -72,11 +70,9 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
       });
 
     if (confirmError) {
-      console.log(confirmError);
       setCardError(confirmError.message);
     }
 
-    console.log("payment intent", paymentIntent);
 
     if (paymentIntent.status === "succeeded") {
       const paymentInfo = {
@@ -94,7 +90,6 @@ const CheckOutForm = ({ bookingInfo, closeModal }) => {
         toast.success(text);
         navigate("/dashboard/my-bookings");
       } catch (err) {
-        console.log(err.message);
         toast.error(err?.message);
       }
 

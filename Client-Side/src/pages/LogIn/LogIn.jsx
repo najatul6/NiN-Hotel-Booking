@@ -42,7 +42,6 @@ const LogIn = () => {
 
       // Save user in Database
       const dbResponse = await saveUser(result.user);
-      console.log(dbResponse);
 
       // Get Token from jwt
       await getToken(result?.user?.email);
