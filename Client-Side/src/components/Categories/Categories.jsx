@@ -4,7 +4,7 @@ import Container from "../Shared/Container";
 import CategoriesBox from "./CategoriesBox/CategoriesBox";
 
 const Categories = () => {
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const category = params.get("category");
   return (
     <Container>
