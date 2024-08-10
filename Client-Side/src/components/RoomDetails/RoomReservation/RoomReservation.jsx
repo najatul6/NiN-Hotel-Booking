@@ -53,7 +53,7 @@ const RoomReservation = ({ roomData }) => {
       </div>
       <hr />
       <div className="flex justify-center">
-        <Calender value={value} />
+        <Calender value={value} onChange={(item) => setValue(item.selection)} />
       </div>
       <hr />
       <div className="p-4">
