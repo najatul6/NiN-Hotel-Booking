@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Button = ({ label, onClick, disabled, outline, small, icon: Icon }) => {
+const Button = ({ label, onClick, disabled, outline, small, icon }) => {
   return (
     <button
       disabled={disabled}
@@ -23,8 +23,8 @@ const Button = ({ label, onClick, disabled, outline, small, icon: Icon }) => {
           ${small ? "border-[1px]" : "border-2"}
         `}
     >
-      {Icon && (
-        <Icon
+      {icon && (
+        <icon
           size={24}
           className="
               absolute
@@ -41,9 +41,10 @@ const Button = ({ label, onClick, disabled, outline, small, icon: Icon }) => {
 Button.propTypes = {
   label: PropTypes.any,
   onClick: PropTypes.any,
-  disabled:PropTypes.any,
-  outline:PropTypes.any,
-  small:PropTypes.any,
+  disabled: PropTypes.any,
+  outline: PropTypes.any,
+  small: PropTypes.any,
+  icon: PropTypes.any,
 };
 
 export default Button;
