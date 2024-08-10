@@ -40,7 +40,7 @@ const verifyToken = async (req, res, next) => {
 };
 
 // Send email
-const sendEmail = () => {
+const sendEmail = (recipientEmail, emailContent) => {
   // Create a transporter
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -52,12 +52,18 @@ const sendEmail = () => {
       pass: process.env.PASS,
     },
   });
+  const mailOptions = {
+    from: process.env.USER,
+    to: recipientEmail,
+    subject: emailContent.subject,
+    text: emailContent.message,
+  };
   // verify connection
-  transporter.verify((error, success) => {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      // console.log(error);
+      console.error("Error sending email:", error);
     } else {
-      // console.log("succes from emails", success);
+      console.log("Email sent:", info.response);
     }
   });
 };
