@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const MenuItem = ({ label, address, icon: Icon }) => {
   return (
@@ -17,5 +18,11 @@ const MenuItem = ({ label, address, icon: Icon }) => {
     </NavLink>
   );
 };
+
+MenuItem.propTypes = {
+  label: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  icon: PropTypes.elementType.isRequired,
+}
 
 export default MenuItem;

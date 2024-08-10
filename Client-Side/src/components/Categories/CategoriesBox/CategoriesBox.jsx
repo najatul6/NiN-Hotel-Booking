@@ -18,9 +18,16 @@ const CategoriesBox = ({ label, icon:Icon, selected }) => {
     }
   };
   params.get("category");
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      handleClick();
+    }
+  };
   return (
     <div
       onClick={handleClick}
+      onKeyDown={handleKeyPress}
+      tabIndex={0}
       className={`
       flex 
       flex-col 
