@@ -1,8 +1,9 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import qs from "query-string";
+import PropTypes from "prop-types";
 
-const CategoriesBox = ({ label, icon: Icon, selected }) => {
-  const [params, setParams] = useSearchParams();
+const CategoriesBox = ({ label, icon:Icon, selected }) => {
+  const [params] = useSearchParams();
   const navigate = useNavigate();
   const handleClick = () => {
     let currentQuery = {};
@@ -41,5 +42,12 @@ const CategoriesBox = ({ label, icon: Icon, selected }) => {
     </div>
   );
 };
+
+CategoriesBox.propTypes = {
+  label: PropTypes.string.isRequired,
+  icon: PropTypes.elementType.isRequired,
+  selected: PropTypes.bool.isRequired,
+}
+
 
 export default CategoriesBox;
